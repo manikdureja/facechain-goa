@@ -6,3 +6,5 @@ temp_*.jpg
 .DS_Store
 *.jpg
 *.json
+*.webp
+pipeline3.py
