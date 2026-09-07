@@ -1,0 +1,10 @@
+torch
+torchvision
+facenet-pytorch
+Pillow
+numpy
+requests
+python-dotenv
+web3
+fastapi
+uvicorn

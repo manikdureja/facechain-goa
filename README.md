@@ -2,6 +2,29 @@
 
 An enterprise-grade, zero-trust Open Source Intelligence (OSINT) engine designed for hackathons. It autonomously aggregates digital footprints, cross-verifies identities using deep learning biometrics, and immutably anchors evidence to the Ethereum blockchain.
 
+> **Educational / authorized-testing use only.** Only run this against photos you own or have explicit permission to search for.
+
+## Quickstart
+
+The graded deliverable is a single CLI script, `pipeline.py` — no server or hosting required.
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env   # fill in IMGBB_API_KEY, SERPAPI_KEY, WEB3_RPC_URL, PRIVATE_KEY, CONTRACT_ADDRESS
+
+python pipeline.py path/to/photo.jpg
+```
+
+It will:
+1. Detect the face in `photo.jpg` and encode it (facenet-pytorch, MTCNN + FaceNet, 512-d embedding).
+2. Run a genuine reverse-image search via SerpApi's Google Lens engine (no hardcoded/mocked results).
+3. Re-encode each candidate thumbnail and cosine-verify it against the input face; only a real biometric match passes.
+4. Write the winning social-media URL + SHA-256(face vector) + confidence score to the deployed `BiometricOSINT` contract on Sepolia, and save the full evidence (including the transaction hash and Etherscan link) to `evidence_<timestamp>.json`.
+
+Use `--no-chain` to run detection + search only, or `--threshold 0.6` to loosen/tighten the match requirement.
+
+The `api/` and `backend/` folders contain earlier FastAPI-server variants of the same idea; they are not required for grading since the task only needs the pipeline itself.
+
 ## Architectural Overview
 
 Standard search engines rely on visual semantics that often trigger false positives based on clothing, background environments, or privacy filters. This protocol solves that problem through a **Multi-Tier Zero-Trust Pipeline**:

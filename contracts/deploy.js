@@ -1,10 +1,10 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Registry = await hre.ethers.getContractFactory("BiometricRegistry");
-  const registry = await Registry.deploy();
-  await registry.waitForDeployment();
-  console.log(`BiometricRegistry deployed to: ${await registry.getAddress()}`);
+  const OSINT = await hre.ethers.getContractFactory("BiometricOSINT");
+  const osint = await OSINT.deploy();
+  await osint.waitForDeployment();
+  console.log(`BiometricOSINT deployed to: ${await osint.getAddress()}`);
 }
 main().catch((error) => {
   console.error(error);
